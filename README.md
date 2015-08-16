@@ -2,7 +2,7 @@
 
 CoLog is a prefix-based leveled execution log for Go. It's heavily inspired by [Logrus](https://github.com/Sirupsen/logrus) and aims to offer similar features by parsing the output of the standard library log. If you don't understand what this means take a look at this picture.
 
-![CoLog showcase](http://i.imgur.com/ydv8bti.png)
+![CoLog showcase](http://i.imgur.com/jx9pu1b.png)
 
 ## But why?
 
