@@ -4,6 +4,10 @@ CoLog is a prefix-based leveled execution log for Go. It's heavily inspired by [
 
 ![CoLog showcase](http://i.imgur.com/J3YbZXD.png)
 
+## But why?
+
+An introduction and the rationale behind CoLog can be found in this blog post: https://texlution.com/post/colog-prefix-based-logging-in-golang/
+
 ## Features
 
 * Supports hooks to receive log entries and send them to external systems via `AddHook`
