@@ -147,21 +147,10 @@ func (sf *StdFormatter) stdFields(buf *[]byte, f Fields, level Level) {
 	var trail []byte
 	tbuf := bytes.NewBuffer(trail)
 	for _, k := range keys {
-
-		verb := "%#v"
-		switch f[k].(type) {
-		case string:
-			verb = "%s"
-		case int:
-			verb = "%d"
-		case bool:
-			verb = "%t"
-		}
-
 		if sf.Colors {
-			fmt.Fprintf(tbuf, "  \033[1m%s\033[0m="+verb, k, f[k])
+			fmt.Fprintf(tbuf, "  \033[1m%s\033[0m=%+v", k, f[k])
 		} else {
-			fmt.Fprintf(tbuf, "  %s="+verb, k, f[k])
+			fmt.Fprintf(tbuf, "  %s=%+v", k, f[k])
 		}
 	}
 
