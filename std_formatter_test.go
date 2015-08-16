@@ -127,7 +127,7 @@ var formatterTests = []formatTest{
 func TestStdFormatter(t *testing.T) {
 	for _, tt := range formatterTests {
 		f := StdFormatter{
-			Flag:  tt.flags,
+			Flag:   tt.flags,
 			Colors: tt.colors,
 		}
 

@@ -112,7 +112,7 @@ var JSONFormatTests = []JSONFormatTest{
 func TestJSONFormatter(t *testing.T) {
 	for _, tt := range JSONFormatTests {
 		f := JSONFormatter{
-			Flag:      tt.flags,
+			Flag:       tt.flags,
 			LevelAsNum: tt.lnum,
 			TimeFormat: tt.tfmt,
 		}
