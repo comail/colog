@@ -5,17 +5,22 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"github.com/mattn/go-colorable"
 	"io"
 	"log"
 	"os"
-	"runtime"
 	"sync"
 	"time"
 )
 
-// std is the global singleton
-// analog of the standard log.std
-var std = NewCoLog(os.Stderr, "", 0)
+var (
+	stdout = colorable.NewColorableStdout()
+	stderr = colorable.NewColorableStderr()
+
+	// std is the global singleton
+	// analog of the standard log.std
+	std = NewCoLog(stderr, "", 0)
+)
 
 // CoLog encapsulates our log writer
 type CoLog struct {
@@ -389,15 +394,11 @@ func (cl *CoLog) applyLevel(e *Entry) {
 
 // figure if output supports color
 func (cl *CoLog) colorSupported() bool {
-	if runtime.GOOS == "windows" {
-		return false
-	}
-
-	if cl.out == os.Stderr && isTerminal(int(os.Stderr.Fd())) {
+	if cl.out == stderr && isTerminal(int(os.Stderr.Fd())) {
 		return true
 	}
 
-	if cl.out == os.Stdout && isTerminal(int(os.Stdout.Fd())) {
+	if cl.out == stdout && isTerminal(int(os.Stdout.Fd())) {
 		return true
 	}
 
