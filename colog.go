@@ -5,12 +5,13 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
-	"github.com/mattn/go-colorable"
 	"io"
 	"log"
 	"os"
 	"sync"
 	"time"
+
+	"github.com/mattn/go-colorable"
 )
 
 var (
