@@ -518,5 +518,5 @@ func ParseLevel(level string) (Level, error) {
 		return lvl, nil
 	}
 
-	return unknown, fmt.Errorf("Could not parse level %s", level)
+	return unknown, fmt.Errorf("could not parse level %s", level)
 }
