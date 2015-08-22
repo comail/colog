@@ -21,6 +21,7 @@ An introduction and the rationale behind CoLog can be found in this blog post: h
 * Supports permanent context values via `FixedValue` and `ClearFixedValues`
 * Supports standalone loggers via `NewCoLog` and `NewLogger`
 * Compatible with existing Logrus hooks and formatters via [cologrus](https://github.com/comail/cologrus)
+* Supports Windows terminal colors via [wincolog](https://github.com/comail/wincolog)
 
 ## API stability
 
