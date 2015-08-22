@@ -130,14 +130,15 @@ func NewCoLog(out io.Writer, prefix string, flags int) *CoLog {
 	cl.defaultLevel = initialDefaultLevel
 	cl.hooks = make(hookPool)
 	cl.fixed = make(Fields)
-	cl.out = out
 	cl.headers = defaultHeaders
 	cl.prefix = prefix
-	cl.formatter = &StdFormatter{Flag: flags, Colors: cl.colorSupported()}
+	cl.formatter = &StdFormatter{Flag: flags}
 	cl.extractor = &StdExtractor{}
+	cl.SetOutput(out)
 	if host, err := os.Hostname(); err != nil {
 		cl.host = host
 	}
+
 	return cl
 }
 
@@ -293,8 +294,9 @@ func (cl *CoLog) SetOutput(w io.Writer) {
 
 	cl.out = w
 
-	if !cl.colorSupported() {
-		cl.formatter.DisableColors()
+	// if we have a color formatter, notify if new output supports color
+	if _, ok := cl.formatter.(ColorFormatter); ok {
+		cl.formatter.(ColorFormatter).ColorSupported(cl.colorSupported())
 	}
 }
 
@@ -389,19 +391,28 @@ func (cl *CoLog) applyLevel(e *Entry) {
 
 // figure if output supports color
 func (cl *CoLog) colorSupported() bool {
+
+	// ColorSupporters can decide themselves
+	if ce, ok := cl.out.(ColorSupporter); ok {
+		return ce.ColorSupported()
+	}
+
+	// Windows users need ColorSupporter outputs
 	if runtime.GOOS == "windows" {
 		return false
 	}
 
-	if cl.out == os.Stderr && isTerminal(int(os.Stderr.Fd())) {
-		return true
+	// Check for Fd() method
+	output, ok := cl.out.(interface {
+		Fd() uintptr
+	})
+
+	// If no file descriptor it's not a TTY
+	if !ok {
+		return false
 	}
 
-	if cl.out == os.Stdout && isTerminal(int(os.Stdout.Fd())) {
-		return true
-	}
-
-	return false
+	return isTerminal(int(output.Fd()))
 }
 
 func (cl *CoLog) extractFields(e *Entry) {

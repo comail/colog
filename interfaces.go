@@ -10,9 +10,21 @@ type Hook interface {
 // Format(*Entry) will be called and the resulting bytes sent to output
 type Formatter interface {
 	Format(*Entry) ([]byte, error) // The actual formatter called every time
-	DisableColors()                // DisableColors is called when the output doesn't support them
 	SetFlags(flags int)            // Like the standard log.SetFlags(flags int)
 	Flags() int                    // Like the standard log.Flags() int
+}
+
+// ColorFormatter interface can be implemented by formatters
+// to get notifications on whether the output supports color
+type ColorFormatter interface {
+	Formatter
+	ColorSupported(yes bool)
+}
+
+// ColorSupporter interface can be implemented by "smart"
+// outputs that want to handle color display themselves
+type ColorSupporter interface {
+	ColorSupported() bool
 }
 
 // Extractor interface must be implemented by data extractors

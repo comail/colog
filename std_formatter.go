@@ -32,11 +32,13 @@ var plainLabels = LevelMap{
 // StdFormatter supports plain and color level headers
 // and bold/padded fields
 type StdFormatter struct {
-	mu          sync.Mutex
-	Flag        int
-	HeaderPlain LevelMap
-	HeaderColor LevelMap
-	Colors      bool
+	mu             sync.Mutex
+	Flag           int
+	HeaderPlain    LevelMap
+	HeaderColor    LevelMap
+	Colors         bool // Force enable colors
+	NoColors       bool // Force disable colors (has preference)
+	colorSupported bool
 }
 
 // Format takes and entry and returns the formatted output in bytes
@@ -56,21 +58,33 @@ func (sf *StdFormatter) Format(e *Entry) ([]byte, error) {
 		sf.mu.Unlock()
 	}
 
-	labels := sf.HeaderPlain
-	if sf.Colors {
-		labels = sf.HeaderColor
-	}
-
+	// Normal headers.  time, file, etc
 	var header, message []byte
 	sf.stdHeader(&header, e.Time, e.Prefix, e.File, e.Line)
 
-	message = append(labels[e.Level], append(header, e.Message...)...)
+	// Level headers
+	headers := sf.levelHeaders()
+	message = append(headers[e.Level], append(header, e.Message...)...)
 
 	if e.Fields != nil {
 		sf.stdFields(&message, e.Fields, e.Level)
 	}
 
 	return append(message, '\n'), nil
+}
+
+// levelHeaders returns plain or color level headers
+// depending on user preference and output support
+func (sf *StdFormatter) levelHeaders() LevelMap {
+	switch {
+	case sf.NoColors:
+		return sf.HeaderPlain
+	case sf.Colors:
+		return sf.HeaderColor
+	case sf.colorSupported:
+		return sf.HeaderColor
+	}
+	return sf.HeaderPlain
 }
 
 // Flags returns the output flags for the formatter.
@@ -83,9 +97,9 @@ func (sf *StdFormatter) SetFlags(flags int) {
 	sf.Flag = flags
 }
 
-// DisableColors disables the colors, this will be called on every
-func (sf *StdFormatter) DisableColors() {
-	sf.Colors = false
+// ColorSupported enables or disables the colors, this will be called on every
+func (sf *StdFormatter) ColorSupported(supp bool) {
+	sf.Colors = supp
 }
 
 // Adapted replica of log.Logger.formatHeader

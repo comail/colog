@@ -72,9 +72,6 @@ func (jf *JSONFormatter) SetFlags(flags int) {
 	jf.Flag = flags
 }
 
-// DisableColors is only necessary to implement the formatter interface
-func (jf *JSONFormatter) DisableColors() {}
-
 func (jf *JSONFormatter) fileLine(e *Entry) (file string, line int) {
 	if jf.Flag&(log.Lshortfile|log.Llongfile) == 0 {
 		return
