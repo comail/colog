@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/comail/colog.svg?branch=master)](https://travis-ci.org/comail/colog)&nbsp;[![godoc reference](https://godoc.org/comail.io/go/colog?status.png)](https://godoc.org/comail.io/go/colog)
+
 # What's CoLog?
 
 CoLog is a prefix-based leveled execution log for Go. It's heavily inspired by [Logrus](https://github.com/Sirupsen/logrus) and aims to offer similar features by parsing the output of the standard library log. If you don't understand what this means take a look at this picture.
