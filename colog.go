@@ -1,4 +1,15 @@
 // Package colog implements prefix based logging by setting itself as output of the standard library
+// and parsing the log messages. Level prefixes are called headers in CoLog terms to not confuse with
+// log.Prefix() which is independent.
+// Basic usage only requires registering:
+//	func main() {
+//		colog.Register()
+//		log.Print("info: that's all it takes!")
+//	}
+//
+// CoLog requires the standard logger to submit messages without prefix or flags. So it resets them
+// while registering and assigns them to itself, unfortunately CoLog cannot be aware of any output
+// previously set.
 package colog
 
 import (
