@@ -132,6 +132,7 @@ var defaultHeaders = HeaderMap{
 	"a: ":       LAlert,
 	"alr: ":     LAlert,
 	"alert: ":   LAlert,
+	"panic: ":   LAlert,
 }
 
 // NewCoLog returns CoLog instance ready to be used in logger.SetOutput()
