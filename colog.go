@@ -526,7 +526,7 @@ func ClearFixedValues() {
 
 // ParseLevel parses a string into a type Level
 func ParseLevel(level string) (Level, error) {
-	if lvl, ok := std.headers[level]; ok {
+	if lvl, ok := std.headers[level+": "]; ok {
 		return lvl, nil
 	}
 
