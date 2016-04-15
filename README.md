@@ -39,7 +39,7 @@ package main
 import (
 	"log"
 
-	"comail.io/go/colog"
+	"github.com/comail/colog"
 )
 
 func main() {
@@ -58,7 +58,7 @@ import (
 	"os"
 	"time"
 
-	"comail.io/go/colog"
+	"github.com/comail/colog"
 )
 
 func main() {
@@ -79,7 +79,7 @@ func main() {
 	log.Print("warning: with fields foo=bar")
 }
 
-// cat tempjson.log 
+// cat tempjson.log
 // {"level":"info","time":"2015-08-16T13:26:07+02:00","file":"json_example.go","line":24,"message":"logging this to json"}
 // {"level":"warning","time":"2015-08-16T13:26:07+02:00","file":"json_example.go","line":25,"message":"with fields","fields":{"foo":"bar"}}
 ```
@@ -93,7 +93,7 @@ import (
 	"log"
 	"os"
 
-	"comail.io/go/colog"
+	"github.com/comail/colog"
 )
 
 func main() {
@@ -119,7 +119,7 @@ import (
 	"fmt"
 	"log"
 
-	"comail.io/go/colog"
+	"github.com/comail/colog"
 )
 
 type myHook struct {
@@ -152,8 +152,8 @@ func main() {
 	log.Print("info: something foo=bar")
 }
 
-// We got an entry: 
-// &colog.Entry{Level:0x3, Time:time.Time{sec:63575323196, nsec:244349216, loc:(*time.Location)(0x23f8c0)}, Host:"", 
-// Prefix:"", File:"/data/workspace/comail/comail/src/comail.io/go/colog/examples/hook_example.go", Line:37, 
+// We got an entry:
+// &colog.Entry{Level:0x3, Time:time.Time{sec:63575323196, nsec:244349216, loc:(*time.Location)(0x23f8c0)}, Host:"",
+// Prefix:"", File:"/data/workspace/comail/comail/src/comail.io/go/colog/examples/hook_example.go", Line:37,
 // Message:[]uint8{0x73, 0x6f, 0x6d, 0x65, 0x74, 0x68, 0x69, 0x6e, 0x67}, Fields:colog.Fields{"foo":"bar"}}%
 ```
